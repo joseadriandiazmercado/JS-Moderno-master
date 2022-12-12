@@ -1,1 +1,1 @@
-console.log('Creacion de un nuevo producto');
+console.log('Nuevo mensaje')
