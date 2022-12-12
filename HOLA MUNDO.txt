@@ -1,0 +1,3 @@
+<script>   // etiqueta para llamar a JS
+console.log("hola bola de perros"); //console.log para imprimir en pantalla 
+</script>
