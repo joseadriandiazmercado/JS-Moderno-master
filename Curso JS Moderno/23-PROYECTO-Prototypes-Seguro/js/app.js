@@ -8,7 +8,7 @@ function Seguro(marca,year,tipo){
 
 }
 //Realiza la cotizacion con los datos(Creacion del prototype)
-//Se crea con function por que debe de extraer argumentos de otro lado
+//Se crea con "function" por que debe de extraer argumentos de otro lado
 Seguro.prototype.cotizarSeguro = function(){
     /*
     Valores para la cotizacion
@@ -134,15 +134,12 @@ UI.prototype.mostrarResultado = (seguro,total) =>{
     // lo que mostrara el codigo de html en el html
     div.innerHTML = `
     <p class="header">Tu Resumen</p>
-
     <p class="font-bold">Marca: <span class="font-normal"> ${textoMarca} </span></p>
     <p class="font-bold">Year: <span class="font-normal">  ${seguro.year} </span></p>
     <p class="font-bold">Tipo: <span class="font-normal capitalize">  ${seguro.tipo} </span></p>
     <p class="font-bold">Total: <span class="font-normal">$ ${total} </span></p>
     `
-
     const resultadoDiv = document.querySelector('#resultado');
-    
 
     //Mostrar el spinner
     const spinner = document.querySelector('#cargando');

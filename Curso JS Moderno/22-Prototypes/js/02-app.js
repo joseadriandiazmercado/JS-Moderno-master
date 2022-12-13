@@ -1,6 +1,4 @@
 // Menos comun, pero te permite crear objetos dinamicos y reutilizables
-// Menos comun, pero te permite crear objetos dinamicos y reutilizables
-// Menos comun, pero te permite crear objetos dinamicos y reutilizables
 
 function Cliente(nombre,saldo){
 
@@ -12,7 +10,7 @@ function Cliente(nombre,saldo){
 const David = new Cliente('David',1000);
 const Adrian = new Cliente('Adrian',200);
 
-// recuerda el param etro que tiene que regresar...
+// recuerda el parametro que tiene que regresar...
 function formatearCliente(cliente){
 const {nombre, saldo} = cliente;
 return `El Cliente ${nombre} tiene un saldo de ${saldo}`
