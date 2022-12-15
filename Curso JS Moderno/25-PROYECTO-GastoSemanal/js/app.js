@@ -264,4 +264,5 @@ function eliminarGasto(id){
 
     //esto toma todo el objeto
     ui.comprobarPresupuesto(presupuesto);
+    console.log('Ultima validacion');
 }
