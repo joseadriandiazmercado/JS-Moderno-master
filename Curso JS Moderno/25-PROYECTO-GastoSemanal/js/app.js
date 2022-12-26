@@ -1,7 +1,6 @@
 /*NOTES*/
 //isNaN, obligar al usuario que coloque numeros
-
-
+// y verificar que es numero
 
 //Variables y Selectores
 const formulario = document.querySelector('#agregar-gasto');
@@ -12,7 +11,10 @@ const gastoListado = document.querySelector('#gastos ul');
 eventListeners();
 function eventListeners(){
 
+    //Cuanod la pagina cargue 
     document.addEventListener('DOMContentLoaded', preguntarPresupuesto);    
+
+    
     formulario.addEventListener('submit', agregarGastos);
 }
 
