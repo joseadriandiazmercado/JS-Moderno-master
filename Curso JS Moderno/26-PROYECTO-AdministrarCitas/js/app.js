@@ -10,8 +10,11 @@ const formulario = document.querySelector('#nueva-cita');
 //ul para guardar citas
 const contenedorCitas = document.querySelector('#citas');
 
+//Modo edicion
+let edicion;
+
 //Creacion de las clases
-class Citas {
+class Citas{
 
     constructor(){
         //donde se van almacenar las citas
@@ -21,11 +24,20 @@ class Citas {
     agregarCitas(cita){
         //acceder al arreglo vacio
     this.citas = [...this.citas, cita]
-    // console.log(this.citas);
+    
     }
     eliminarCita(id){
         //Vamos a acceder a cada cita
         this.citas = this.citas.filter(cita => cita.id !== id )
+    }
+    //Pasamos toda la cita completa, aqui el usuario puede editar lo que le plasca
+    editarCita(citaActualizada){
+        //Mapa para que cree un nuevo arreglo
+        //"cita" es con lo que vamos a iterar
+        //Comparamos que el id de cita actual y la copia de la cita que le pasamo tengan el mismo id
+        //Si es asi, se reecribe esa cita
+        //Caso contrario las citas siguen igual
+        this.citas = this.citas.map( cita => cita.id == citaActualizada.id ? citaActualizada : cita);
     }
 }
 class UI{
@@ -124,7 +136,7 @@ class UI{
 
             //Agregar las citas al html
             contenedorCitas.appendChild(divCita);
-            console.log(contenedorCitas);
+            
         });
     }
 
@@ -176,7 +188,6 @@ function datosCita(event){
 
 //acceder a las propiedades 
 citaObj[event.target.name] = event.target.value;
-// console.log(citaObj);
 } 
 
 //Valida y agrega una nueva cita a la clase de citas
@@ -192,9 +203,26 @@ function nuevaCita(event){
         ui.imprimirAlerta('Todos los campos son obligatorios', 'error');
         console.log('Todos los campos son obligatorios')
         return;
-    }else{
-        let nombre = "anthonny";
+    }
+        if(edicion){
+            //Imprimir alerta de edicion correctamente
+            ui.imprimirAlerta('Editado Correctamente');
 
+            //Pasar el objeto de la cita a edicion
+            //No pasar todo el objeto
+            //Se manda una copia del objeto
+            administrar.editarCita({...citaObj});
+
+            // cambiar el texto del boton del formulario
+            formulario.querySelector('button[type="submit"]').classList.remove('btn-warning');
+            formulario.querySelector('button[type="submit"]').classList.add('btn-success');
+            formulario.querySelector('button[type="submit"]').textContent = 'Crear Cita';
+
+            //Quitar el modo edicion
+            edicion = false;
+            
+        }else {
+            
         //Generar un id unico
         //esto para poder eliminar la cita
         //Se pueden agregar datos un arreglo "." mas la llave y el valor
@@ -205,6 +233,9 @@ function nuevaCita(event){
         //{...} tenemos que pasar una copia del objeto
         //esto para que no se sobreescriban todos nuevamente
         administrar.agregarCitas({...citaObj});
+        //Mensaje de agregado correctamente
+        ui.imprimirAlerta('Se agrego correctamente');
+        }
 
         //reiniciar objeto para la validacion
         reiniciarObjeto();
@@ -214,8 +245,10 @@ function nuevaCita(event){
 
         //Mostrar el html de las citas
         ui.imprimirCitas(administrar);
+        
+        
     }
-}
+
 
 //Colocar los campos del objeto
 function reiniciarObjeto(){
@@ -251,12 +284,24 @@ function modificarCita(cita){
     fechaInpuT.value = fecha;
     horaInpuT.value = hora;
     sintomasInpuT.value = sintomas;
+    citaObj.id = id;
 
-    console.log(cita);
+    //Los tenemos en los inputs pero no en el objeto
+    //LLenar el objeto
+    //Ingresamos a la llave del objeto y colocamos el valor con lo obtenido de los input arriva 
+    citaObj.mascota = mascota;
+    citaObj.propietario = propietario;
+    citaObj.telefono = telefono;
+    citaObj.fecha = fecha;
+    citaObj.hora = hora;
+    citaObj.sintomas = sintomas;
+    
     // cambiar el texto del boton del formulario
     formulario.querySelector('button[type="submit"]').classList.remove('btn-success');
     formulario.querySelector('button[type="submit"]').classList.add('btn-warning');
     formulario.querySelector('button[type="submit"]').textContent = 'Modificar Cita';
     // formulario.textContent = 'Modificar Cita'
+    
+    edicion = true;
     
 }
