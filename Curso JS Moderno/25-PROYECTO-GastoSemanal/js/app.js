@@ -26,13 +26,17 @@ class Presupuesto{
         //Este sera el valor inicial, pues deben de ser la misma cantidad
         this.restante = Number(presupuesto);
         //Donde vamos a agregar los gastos
-        this.gastos = [];
+        this.gastos = localStorage.getItem('gastos') || [];
+        console.log(this.gastos)
     }
     //Creacion del primer metodo
     nuevoGasto(gasto){
         // tomar una copia de ...this.gasto y agregamos gasto al final 
         //Guardar el nuevo gasto en el arreglo vacio
         this.gastos = [...this.gastos, gasto]
+        //Gurdad en localStorage
+        const gastosString = JSON.stringify(this.gastos)
+        this.gastos = localStorage.setItem('gastos',gastosString);
         //La funcion de abajo se llamara una vez un nuevo gasto sea agregado
         this.calcularRestante();
     }
@@ -187,7 +191,7 @@ class UI {
 function preguntarPresupuesto(){
     //prompt alerta en la pantalla y guardar valor.
     const presupuestoUsuario = prompt('Cual es tu presupuesto');
-            // console.log(Number(presupuestoUsuario));
+    // console.log(Number(presupuestoUsuario));
     //Si no guarda nada es null 
     //isNaN para verificar si guarda un caracter en presupuestoUsuario
     if(presupuestoUsuario === '' || presupuestoUsuario === null || isNaN(presupuestoUsuario) || presupuestoUsuario <= 0){
@@ -200,7 +204,7 @@ function preguntarPresupuesto(){
     ui.insertarPresuouesto(presupuesto);
 }
 
-
+//----------------------Funcion----------------------
 //Anade gastos
 //submit del formulario
 function agregarGastos(evento){
@@ -223,7 +227,6 @@ function agregarGastos(evento){
     else if(!isNaN(nombre)){
         ui.imprimirAlerta('Nombre Gasto Incorrecto', 'error')
         return;
-
     }
 
     //Generar un objeto con el gasto
@@ -250,7 +253,7 @@ function agregarGastos(evento){
     //Reinicia el formulario
     formulario.reset();
 }
-
+//Que es lo que se debe de hacer cuando se elimine un gasto.
 function eliminarGasto(id){
 
     //Elimina los gastos del objeto
@@ -266,5 +269,4 @@ function eliminarGasto(id){
 
     //esto toma todo el objeto
     ui.comprobarPresupuesto(presupuesto);
-    console.log('Ultima validacion');
 }

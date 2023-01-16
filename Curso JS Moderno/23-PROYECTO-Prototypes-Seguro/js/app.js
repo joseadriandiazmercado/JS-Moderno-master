@@ -52,7 +52,7 @@ Seguro.prototype.cotizarSeguro = function(){
    }
    //Sera un prototype que haga todos los calculos
    //Y nos regresa una cantidad
-   console.log(cantidad);
+//    console.log('Regresando cantidad despues de la cotizacion.')
    return cantidad;
 }
 
@@ -137,8 +137,8 @@ UI.prototype.mostrarResultado = (seguro,total) =>{
     <p class="font-bold">Marca: <span class="font-normal"> ${textoMarca} </span></p>
     <p class="font-bold">Year: <span class="font-normal">  ${seguro.year} </span></p>
     <p class="font-bold">Tipo: <span class="font-normal capitalize">  ${seguro.tipo} </span></p>
-    <p class="font-bold">Total: <span class="font-normal">$ ${total} </span></p>
-    `
+    <p class="font-bold">Total: <span class="font-normal">$ ${total} </span></p>`
+
     const resultadoDiv = document.querySelector('#resultado');
 
     //Mostrar el spinner
@@ -177,8 +177,8 @@ function eventListeners(){
 function cotizarSeguro(event){
     //Prevenir accion por default
     event.preventDefault();
-
-    //Recuerda que para ingresar al valor de donde ya esta el id, despues de seleccionar el doc. es value
+    //Los valores seran escritos en String
+    //Recuerda que para ingresar al valor de donde ya esta el id, despues de seleccionar el doc. es 'value"
     //Leer la marca seleccionada
     const marca = document.querySelector('#marca').value
     
@@ -188,7 +188,7 @@ function cotizarSeguro(event){
     //Leer el tipo de cobertura
     //selecionamos el input,que name sea = tipo y que seleccione el checado (seleccionado) y obtenemos el valor con .value
     const tipo = document.querySelector('input[name="tipo"]:checked').value
-    
+
     //Si cualquiere de estos parametros tiene un string vacio
     if(marca ==='' || year === '' || tipo === ''){
         ui.mostrarMensaje('Todos los campos son obligatorios', 'error');
