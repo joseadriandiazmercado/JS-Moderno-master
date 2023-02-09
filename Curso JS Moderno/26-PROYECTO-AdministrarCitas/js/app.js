@@ -11,11 +11,16 @@ const formulario = document.querySelector('#nueva-cita');
 //ul para guardar citas
 const contenedorCitas = document.querySelector('#citas');
 
+<<<<<<< HEAD
 //modo edicion
 let editando;
+=======
+//Modo edicion
+let edicion;
+>>>>>>> 426fcb53a74f8d34b8e36dc9587de6b1144fcd2c
 
 //Creacion de las clases
-class Citas {
+class Citas{
 
     constructor(){
         //donde se van almacenar las citas
@@ -25,7 +30,7 @@ class Citas {
     agregarCitas(cita){
         //acceder al arreglo vacio
     this.citas = [...this.citas, cita]
-    // console.log(this.citas);
+    
     }
     eliminarCita(id){
         //Vamos a acceder a cada cita
@@ -35,11 +40,22 @@ class Citas {
         */
         this.citas = this.citas.filter(cita => cita.id !== id )
     }
+<<<<<<< HEAD
 
     editarCita(citaActualizada){
         //map crea un nuevo arreglo
         this.citas = this.citas.map( cita => cita.id === citaActualizada.id ? citaActualizada : cita )
 
+=======
+    //Pasamos toda la cita completa, aqui el usuario puede editar lo que le plasca
+    editarCita(citaActualizada){
+        //Mapa para que cree un nuevo arreglo
+        //"cita" es con lo que vamos a iterar
+        //Comparamos que el id de cita actual y la copia de la cita que le pasamo tengan el mismo id
+        //Si es asi, se reecribe esa cita
+        //Caso contrario las citas siguen igual
+        this.citas = this.citas.map( cita => cita.id == citaActualizada.id ? citaActualizada : cita);
+>>>>>>> 426fcb53a74f8d34b8e36dc9587de6b1144fcd2c
     }
 }
 class UI{
@@ -137,6 +153,10 @@ class UI{
 
             //Agregar las citas al html
             contenedorCitas.appendChild(divCita);
+<<<<<<< HEAD
+=======
+            
+>>>>>>> 426fcb53a74f8d34b8e36dc9587de6b1144fcd2c
         });
     }
 
@@ -187,7 +207,6 @@ function datosCita(event){
 //Despues del .target, lo demas son los atributos.... name, value,type,class
 //acceder a las propiedades 
 citaObj[event.target.name] = event.target.value;
-// console.log(citaObj);
 } 
 
 //Valida y agrega una nueva cita a la clase de citas
@@ -203,6 +222,7 @@ function nuevaCita(event){
         ui.imprimirAlerta('Todos los campos son obligatorios', 'error');
         return;
     }
+<<<<<<< HEAD
 
     if(editando){
         ui.imprimirAlerta('Editado correctamente')
@@ -222,6 +242,27 @@ function nuevaCita(event){
         editando = false;
     }else{
         
+=======
+        if(edicion){
+            //Imprimir alerta de edicion correctamente
+            ui.imprimirAlerta('Editado Correctamente');
+
+            //Pasar el objeto de la cita a edicion
+            //No pasar todo el objeto
+            //Se manda una copia del objeto
+            administrar.editarCita({...citaObj});
+
+            // cambiar el texto del boton del formulario
+            formulario.querySelector('button[type="submit"]').classList.remove('btn-warning');
+            formulario.querySelector('button[type="submit"]').classList.add('btn-success');
+            formulario.querySelector('button[type="submit"]').textContent = 'Crear Cita';
+
+            //Quitar el modo edicion
+            edicion = false;
+            
+        }else {
+            
+>>>>>>> 426fcb53a74f8d34b8e36dc9587de6b1144fcd2c
         //Generar un id unico
         //esto para poder eliminar la cita
         //Se pueden agregar datos un arreglo "." mas la llave y el valor
@@ -232,6 +273,9 @@ function nuevaCita(event){
         //{...} tenemos que pasar una copia del objeto
         //esto para que no se sobreescriban todos nuevamente
         administrar.agregarCitas({...citaObj});
+        //Mensaje de agregado correctamente
+        ui.imprimirAlerta('Se agrego correctamente');
+        }
 
         //mensaje de agregado correctamente
         ui.imprimirAlerta('Cita agregada correctamente')
@@ -246,7 +290,13 @@ function nuevaCita(event){
 
         //Mostrar el html de las citas
         ui.imprimirCitas(administrar);
+        
+        
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 426fcb53a74f8d34b8e36dc9587de6b1144fcd2c
 
 //Colocar los campos del objeto
 function reiniciarObjeto(){
@@ -283,20 +333,37 @@ function modificarCita(cita){
     fechaInpuT.value = fecha;
     horaInpuT.value = hora;
     sintomasInpuT.value = sintomas;
+    citaObj.id = id;
 
+<<<<<<< HEAD
     /*llenar el citaObj */
+=======
+    //Los tenemos en los inputs pero no en el objeto
+    //LLenar el objeto
+    //Ingresamos a la llave del objeto y colocamos el valor con lo obtenido de los input arriva 
+>>>>>>> 426fcb53a74f8d34b8e36dc9587de6b1144fcd2c
     citaObj.mascota = mascota;
     citaObj.propietario = propietario;
     citaObj.telefono = telefono;
     citaObj.fecha = fecha;
     citaObj.hora = hora;
     citaObj.sintomas = sintomas;
+<<<<<<< HEAD
     citaObj.id = id;
 
+=======
+    
+>>>>>>> 426fcb53a74f8d34b8e36dc9587de6b1144fcd2c
     // cambiar el texto del boton del formulario
     formulario.querySelector('button[type="submit"]').classList.remove('btn-success');
     formulario.querySelector('button[type="submit"]').classList.add('btn-warning');
     formulario.querySelector('button[type="submit"]').textContent = 'Modificar Cita';
     // formulario.textContent = 'Modificar Cita'
+<<<<<<< HEAD
     editando = true;
+=======
+    
+    edicion = true;
+    
+>>>>>>> 426fcb53a74f8d34b8e36dc9587de6b1144fcd2c
 }
