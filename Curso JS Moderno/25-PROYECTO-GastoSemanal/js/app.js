@@ -6,15 +6,12 @@
 const formulario = document.querySelector('#agregar-gasto');
 const gastoListado = document.querySelector('#gastos ul');
 
-
 //Eventos
 eventListeners();
 function eventListeners(){
 
     //Cuanod la pagina cargue 
     document.addEventListener('DOMContentLoaded', preguntarPresupuesto);    
-
-    
     formulario.addEventListener('submit', agregarGastos);
 }
 
@@ -26,17 +23,19 @@ class Presupuesto{
         //Este sera el valor inicial, pues deben de ser la misma cantidad
         this.restante = Number(presupuesto);
         //Donde vamos a agregar los gastos
-        this.gastos = localStorage.getItem('gastos') || [];
-        console.log(this.gastos)
+        this.gastos = [];
+
+        // console.log(this.gastos)
     }
     //Creacion del primer metodo
     nuevoGasto(gasto){
         // tomar una copia de ...this.gasto y agregamos gasto al final 
         //Guardar el nuevo gasto en el arreglo vacio
         this.gastos = [...this.gastos, gasto]
+        //todo colocalar en el localStorage
         //Gurdad en localStorage
-        const gastosString = JSON.stringify(this.gastos)
-        this.gastos = localStorage.setItem('gastos',gastosString);
+        // const gastosString = JSON.stringify(this.gastos)
+        // this.gastos = localStorage.setItem('gastos',gastosString);
         //La funcion de abajo se llamara una vez un nuevo gasto sea agregado
         this.calcularRestante();
     }
@@ -69,8 +68,8 @@ class UI {
                 const {presupuesto, restante} = cantidad;
                 // console.log('Mensaja de insertarPresupuesto');
                 //Escribir los valores en el HTML
-                document.querySelector('#total').textContent = presupuesto;
-                document.querySelector('#restante').textContent = restante;
+                document.querySelector('#total').textContent = localStorage.getItem('presupuesto');
+                document.querySelector('#restante').textContent = localStorage.getItem('presupuesto');
         }
         //Hacer reutilizable este metodo
         imprimirAlerta(mensaje,tipo){
@@ -189,19 +188,26 @@ class UI {
 
 //Funciones
 function preguntarPresupuesto(){
-    //prompt alerta en la pantalla y guardar valor.
-    const presupuestoUsuario = prompt('Cual es tu presupuesto');
-    // console.log(Number(presupuestoUsuario));
-    //Si no guarda nada es null 
-    //isNaN para verificar si guarda un caracter en presupuestoUsuario
-    if(presupuestoUsuario === '' || presupuestoUsuario === null || isNaN(presupuestoUsuario) || presupuestoUsuario <= 0){
+    //Preguntar primero si hay Presupuesto en el localStorage
+    if(!localStorage.getItem('presupuesto')){
+        console.log('no hay presupuesto');
+        //prompt alerta en la pantalla y guardar valor.
+        const presupuestoUsuario = prompt('Cual es tu presupuesto');
+        // console.log(Number(presupuestoUsuario));
+        //Si no guarda nada es null 
+        //isNaN para verificar si guarda un caracter en presupuestoUsuario
+        if(presupuestoUsuario === '' || presupuestoUsuario === null || isNaN(presupuestoUsuario) || presupuestoUsuario <= 0){
         //Recargar la pagina actual
         window.location.reload();
+            }
+            
+            localStorage.setItem('presupuesto', presupuestoUsuario);
+            console.log(localStorage.getItem('presupuesto'));
+            
+            //Presupuesto valido
+        presupuesto = new Presupuesto(presupuestoUsuario);
+        ui.insertarPresuouesto(presupuesto);
     }
-
-    //Presupuesto valido
-    presupuesto = new Presupuesto(presupuestoUsuario);
-    ui.insertarPresuouesto(presupuesto);
 }
 
 //----------------------Funcion----------------------

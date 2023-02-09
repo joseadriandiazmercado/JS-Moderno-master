@@ -11,8 +11,9 @@ const producto = {
     precio: 300,
 }
 
-// JSON.stringify vuelve  string producto porque locarstorage no puede regresar valores que no sean string
-const productoString = JSON.stringify(producto);
+// JSON.stringify vuelve  string producto porque
+//  locarstorage no puede almacenar  valores que no sean string
+const productoString = JSON.stringify(producto);s
 
 // manera de guardar un objeto en localstorage
 localStorage.setItem('producto',productoString)

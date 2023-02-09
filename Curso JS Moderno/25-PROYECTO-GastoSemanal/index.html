@@ -28,10 +28,17 @@
                                     <label for="cantidad">Cantidad:</label>
                                     <input type="text" class="form-control" id="cantidad" placeholder="Cantidad en $">
                                 </div>
-
-                                <button type="submit" class="btn btn-primary">Agregar</button>
-                            </form>
-
+                                <button type="submit" class="btn mr-5 btn-primary">Agregar</button>
+                                <button 
+                                    type="submit"
+                                    class="btn btn-light borrar" 
+                                    style="background-color: gray;" 
+                                    onclick="{localStorage.removeItem('presupuesto');
+                                     window.location.reload();}"
+                                     >
+                                     Eliminar
+                                    </button>
+                                </form>
                     </div> <!--.contenido-->
                 </div> <!--.col-->
 

@@ -5,10 +5,14 @@ const telefonoInpuT = document.querySelector('#telefono');
 const fechaInpuT = document.querySelector('#fecha');
 const horaInpuT = document.querySelector('#hora');
 const sintomasInpuT = document.querySelector('#sintomas');
+
 //formulario
 const formulario = document.querySelector('#nueva-cita');
 //ul para guardar citas
 const contenedorCitas = document.querySelector('#citas');
+
+//modo edicion
+let editando;
 
 //Creacion de las clases
 class Citas {
@@ -25,7 +29,17 @@ class Citas {
     }
     eliminarCita(id){
         //Vamos a acceder a cada cita
+        /*filter quita un elemento
+                O
+         Quita los demas dependiendo de una condicion
+        */
         this.citas = this.citas.filter(cita => cita.id !== id )
+    }
+
+    editarCita(citaActualizada){
+        //map crea un nuevo arreglo
+        this.citas = this.citas.map( cita => cita.id === citaActualizada.id ? citaActualizada : cita )
+
     }
 }
 class UI{
@@ -121,10 +135,8 @@ class UI{
             divCita.appendChild(btnModificar);
             
 
-
             //Agregar las citas al html
             contenedorCitas.appendChild(divCita);
-            console.log(contenedorCitas);
         });
     }
 
@@ -173,7 +185,6 @@ const citaObj = {
 function datosCita(event){
 //.name para acceder el valor de name e insertalo en name del html
 //Despues del .target, lo demas son los atributos.... name, value,type,class
-
 //acceder a las propiedades 
 citaObj[event.target.name] = event.target.value;
 // console.log(citaObj);
@@ -185,16 +196,32 @@ function nuevaCita(event){
 
     //extrar la informacion del objeto
     const {mascota,propietario,telefono,fecha,hora,sintomas} = citaObj;
-    
+
     //validar
     if(mascota === '' || propietario === '' || telefono === ''|| fecha === ''|| hora === ''|| sintomas=== ''){
         //Llamar un funcion con el UI
         ui.imprimirAlerta('Todos los campos son obligatorios', 'error');
-        console.log('Todos los campos son obligatorios')
         return;
-    }else{
-        let nombre = "anthonny";
+    }
 
+    if(editando){
+        ui.imprimirAlerta('Editado correctamente')
+
+        //Pasar el objeto de la cita a edicion
+        //No pasar todo el objeto completo
+        //Pasar una copia del objeto
+        //lo datos se pasan al objeto cuando se ejecuta el la funcion "modificar cita", el cual llena nuevamente los datos al objeto
+        administrar.editarCita({...citaObj})
+    
+        //Regresar el estado del boton a su estado original
+        formulario.querySelector('button[type="submit"]').classList.remove('btn-warning');
+        formulario.querySelector('button[type="submit"]').classList.add('btn-success');
+        formulario.querySelector('button[type="submit"]').textContent = 'Crear cita';
+
+        //Quitar modo edicion
+        editando = false;
+    }else{
+        
         //Generar un id unico
         //esto para poder eliminar la cita
         //Se pueden agregar datos un arreglo "." mas la llave y el valor
@@ -206,6 +233,11 @@ function nuevaCita(event){
         //esto para que no se sobreescriban todos nuevamente
         administrar.agregarCitas({...citaObj});
 
+        //mensaje de agregado correctamente
+        ui.imprimirAlerta('Cita agregada correctamente')
+    }
+        
+
         //reiniciar objeto para la validacion
         reiniciarObjeto();
 
@@ -215,7 +247,6 @@ function nuevaCita(event){
         //Mostrar el html de las citas
         ui.imprimirCitas(administrar);
     }
-}
 
 //Colocar los campos del objeto
 function reiniciarObjeto(){
@@ -242,6 +273,7 @@ function modificarCita(cita){
 
     const {mascota,propietario,telefono,fecha,hora,sintomas, id} = cita;
 
+/*llenar los inputs */
     //Tenemos los inputs
     //para colocar un valor al input utilizamos .value
     //Y colocamos como valor, el valor que tenemos en la cita dependiendo del valor
@@ -252,11 +284,19 @@ function modificarCita(cita){
     horaInpuT.value = hora;
     sintomasInpuT.value = sintomas;
 
-    console.log(cita);
+    /*llenar el citaObj */
+    citaObj.mascota = mascota;
+    citaObj.propietario = propietario;
+    citaObj.telefono = telefono;
+    citaObj.fecha = fecha;
+    citaObj.hora = hora;
+    citaObj.sintomas = sintomas;
+    citaObj.id = id;
+
     // cambiar el texto del boton del formulario
     formulario.querySelector('button[type="submit"]').classList.remove('btn-success');
     formulario.querySelector('button[type="submit"]').classList.add('btn-warning');
     formulario.querySelector('button[type="submit"]').textContent = 'Modificar Cita';
     // formulario.textContent = 'Modificar Cita'
-    
+    editando = true;
 }
