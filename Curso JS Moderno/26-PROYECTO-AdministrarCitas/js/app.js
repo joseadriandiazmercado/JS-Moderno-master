@@ -298,6 +298,5 @@ function modificarCita(cita){
     formulario.querySelector('button[type="submit"]').classList.add('btn-warning');
     formulario.querySelector('button[type="submit"]').textContent = 'Modificar Cita';
     // formulario.textContent = 'Modificar Cita'
-    editando = true;
-    
+    editando = true;   
 }
