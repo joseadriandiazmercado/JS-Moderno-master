@@ -1,4 +1,5 @@
 // Creacion de nuestro propio iterador
+//creacion de for
 
 function crearIterador (carrito)
 {
