@@ -19,9 +19,15 @@ const heading = document.querySelector('#administra');
 
 let editando = false;
 
+//Esto es lo que hara cuando el DOM este listo
+window.onload = () => {
+    eventListeners();
+    crearDB();
+    console.log('Documento listo')
+}
+
 
 // Eventos
-eventListeners();
 function eventListeners() {
     mascotaInput.addEventListener('change', datosCita);
     propietarioInput.addEventListener('change', datosCita);
@@ -47,7 +53,7 @@ function datosCita(e) {
 }
 
 // CLasses
-class Citas {
+class Citas{
     constructor() {
         this.citas = []
     }
@@ -262,4 +268,17 @@ function cargarEdicion(cita) {
 
     editando = true;
 
+}
+
+function crearDB(){
+    
+    //Creacion de la base de datos
+    let dbCitas = window.indexedDB.open('citas',1);
+
+    dbCitas.onerror = () => console.log('error al crear bases de datos')
+
+    dbCitas.onsuccess = function(e){
+        DB = e.target.result
+        console.log('Base de datos creada')
+    }
 }
