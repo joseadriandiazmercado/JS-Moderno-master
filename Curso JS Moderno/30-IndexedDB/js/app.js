@@ -7,8 +7,6 @@ let DB;
 //Cuando la aplicacion ya esta cargada
 document.addEventListener('DOMContentLoaded',()=> {
         crmDB();
-
-
         setTimeout(() => {
             crearCliente();
         }, 5000);

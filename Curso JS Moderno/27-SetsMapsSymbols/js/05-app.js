@@ -46,9 +46,8 @@ for(let i in persona){
 const nombreCliente = Symbol('Nombre del cliente')
 const cliente = {};
 
-cliente[nombreCliente] = 'Samantha'
+cliente[nombreCliente] = 'MIE_RDA' //Si estas leyendo esto, tu sabes que estaba aqui......
 
 console.log(cliente)
 console.log(cliente[nombreCliente])
 console.log(nombreCliente)
-
