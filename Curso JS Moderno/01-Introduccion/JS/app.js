@@ -93,12 +93,6 @@
 
 
 
-//!Funcion que se mandar a llamar cada segundo durante una session
-
-
-
-
-
 //!ID unico para cualquier identificador
 // const uniqueDato = () => {
 //     //Quitar 0. en math
@@ -108,15 +102,3 @@
 //     return date + math
 // }
 // console.log(uniqueDato())
-
-let time = 0
-const cargarChat = () => {
-    time++
-    console.log(time)
-
-}
-
-
-// setInterval(() => {
-//     cargarChat();
-// }, 1000);
